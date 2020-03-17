@@ -8,6 +8,8 @@ Created on Tue Mar 17 09:25:42 2020
 import pandas as pd
 from datetime import datetime
 import numpy as np
+import plotly.express as px
+from plotly.offline import plot
 
 
 wczoraj = datetime.today().day-1
@@ -92,3 +94,16 @@ check(wczoraj, miesiac,rok)
 
 print("miejsca z największą liczbą przypadków: ")
 top(wczoraj,miesiac,rok)
+
+formated_gdf = df.groupby(["Country/Region"]).max()
+formated_gdf =  formated_gdf.reset_index()
+date = f"{miesiac}/{wczoraj}/{rok}"
+formated_gdf['size'] = formated_gdf[date].pow(0.3)
+fig = px.scatter_geo(formated_gdf, locations="Country/Region", locationmode='country names', 
+                     color=date, size="size", hover_name="Country/Region", 
+                     range_color= [0, max(formated_gdf[date])+2], 
+                     projection="natural earth", 
+                     title=f"COVID-19 na swiecie w dniu {date}" 
+                     )
+
+plot(fig)
