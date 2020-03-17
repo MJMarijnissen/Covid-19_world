@@ -62,6 +62,29 @@ def top(dzien, mies, rok):
     data= f"{mies}/{dzien}/{rok}"
     result = df[["Province/State", "Country/Region", data]].sort_values(by=data).tail(10)
     print(result)
+    
+
+def brakwirusa(dzien, mies, rok):
+    """
+    brak przypadków do dannego dnia włącznie
+
+    Parameters
+    ----------
+    dzien : INT
+        Day of the year
+    mies : INT
+        Month of the year
+    rok : INT
+        Last 2 digits of year e.g. for 2020, write 20
+
+    Returns
+    -------
+    TYPE Pandas DataFrame
+        Returns DataFrame of countries unaffected
+
+    """
+    data= f"{mies}/{dzien}/{rok}"
+    return df.loc[df[data]==0]
 
 print(f"data: {wczoraj}/{miesiac}")
 print(f"przypadki w Polsce: ")
