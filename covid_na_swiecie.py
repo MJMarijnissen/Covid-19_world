@@ -36,9 +36,9 @@ def check(dzien, mies, rok):
     None. Only prints results
 
     """
-	df = pd.read_csv(url, error_bad_lines=False)
-	result = df.loc[df["Country/Region"]=="Poland"][f"{mies}/{dzien}/{rok}"].values[0]
-	print(result)
+	#df = pd.read_csv(url, error_bad_lines=False)
+    result = df.loc[df["Country/Region"]=="Poland"][f"{mies}/{dzien}/{rok}"].values[0]
+    print(result)
 	
 
 def top(dzien, mies, rok):
