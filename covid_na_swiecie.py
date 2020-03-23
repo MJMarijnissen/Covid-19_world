@@ -76,7 +76,7 @@ def top(date: datetime.date):
     print(result)
     
 
-def brakwirusa(date: datetime.date):
+def brak_wirusa(date: datetime.date):
     """
     brak przypadków do dannego dnia włącznie
 
@@ -98,22 +98,27 @@ def brakwirusa(date: datetime.date):
     date = format_date(date)
     return df.loc[df[date]==0]
 
-print(f"data: {wczoraj}")
-print(f"przypadki w Polsce: ")
-check(wczoraj)
-
-print("miejsca z największą liczbą przypadków: ")
-top(wczoraj)
-
-formated_gdf = df.groupby(["Country/Region"]).max()
-formated_gdf =  formated_gdf.reset_index()
-date = format_date(wczoraj)
-formated_gdf['size'] = formated_gdf[date].pow(0.3)
-fig = px.scatter_geo(formated_gdf, locations="Country/Region", locationmode='country names', 
+def draw_circle_world_map(date: datetime.date):
+    date = format_date(date)
+    formated_gdf = df.groupby(["Country/Region"]).max()
+    formated_gdf =  formated_gdf.reset_index()
+    date = format_date(wczoraj)
+    formated_gdf['size'] = formated_gdf[date].pow(0.3)
+    fig = px.scatter_geo(formated_gdf, locations="Country/Region", locationmode='country names', 
                      color=date, size="size", hover_name="Country/Region", 
                      range_color= [0, max(formated_gdf[date])+2], 
                      projection="natural earth", 
                      title=f"COVID-19 na swiecie w dniu {date}" 
                      )
 
-plot(fig)
+    plot(fig)
+
+
+print(f"data: {wczoraj}")
+print(f"przypadki w Polsce: ")
+check(wczoraj)
+
+print("miejsca z największą liczbą przypadków: ")
+top(wczoraj)
+print('mapka')
+draw_circle_world_map(wczoraj)
