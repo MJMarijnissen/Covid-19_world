@@ -96,6 +96,19 @@ def brak_wirusa(date: datetime.date):
     return df.loc[df[date]==0]
 
 def draw_circle_world_map(date: datetime.date):
+    """
+    Creates circle world map of cases around the world. Map comes in .html
+
+    Parameters
+    ----------
+    date : datetime.date
+        datetime object ex. datetime.date(2020, 3, 22)
+
+    Returns
+    -------
+    .html file. Open in browser to view
+
+    """
     date = format_date(date)
     formated_gdf = df.groupby(["Country/Region"]).max()
     formated_gdf =  formated_gdf.reset_index()
