@@ -6,16 +6,17 @@ Created on Tue Mar 17 09:25:42 2020
 """
 
 import pandas as pd
-from datetime import datetime
+import datetime
 import numpy as np
 import plotly.express as px
 from plotly.offline import plot
 import os
 
 
-wczoraj = datetime.today().day-1
-miesiac = datetime.today().month
-rok = datetime.today().year-2000
+wczoraj = datetime.date.today() - datetime.timedelta(days=1)
+# wczoraj = datetime.today().day-1
+# miesiac = datetime.today().month
+# rok = datetime.today().year-2000
 
 url = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
 df = pd.read_csv(url, error_bad_lines=False)
@@ -28,7 +29,7 @@ def format_date(date: datetime.date):
         return date.strftime('%-m/%-d/%y')
 
 
-def check(dzien, mies, rok):
+def check(date: datetime.date):
     """
     Sprawdza ile wystąpień wirusa jest w Polsce
 
@@ -47,11 +48,12 @@ def check(dzien, mies, rok):
 
     """
 	#df = pd.read_csv(url, error_bad_lines=False)
-    result = df.loc[df["Country/Region"]=="Poland"][f"{mies}/{dzien}/{rok}"].values[0]
+    date = format_date(date)
+    result = df.loc[df["Country/Region"]=="Poland"][date].values[0]
     print(result)
 	
 
-def top(dzien, mies, rok):
+def top(date: datetime.date):
     """
     Zwraca miejsca z największą liczbą przypadkóW
 
@@ -69,12 +71,12 @@ def top(dzien, mies, rok):
     None. Only prints results
 
     """
-    data= f"{mies}/{dzien}/{rok}"
-    result = df[["Province/State", "Country/Region", data]].sort_values(by=data).tail(10)
+    date = format_date(date)
+    result = df[["Province/State", "Country/Region", date]].sort_values(by=date).tail(10)
     print(result)
     
 
-def brakwirusa(dzien, mies, rok):
+def brakwirusa(date: datetime.date):
     """
     brak przypadków do dannego dnia włącznie
 
@@ -93,19 +95,19 @@ def brakwirusa(dzien, mies, rok):
         Returns DataFrame of countries unaffected
 
     """
-    data= f"{mies}/{dzien}/{rok}"
-    return df.loc[df[data]==0]
+    date = format_date(date)
+    return df.loc[df[date]==0]
 
-print(f"data: {wczoraj}/{miesiac}")
+print(f"data: {wczoraj}")
 print(f"przypadki w Polsce: ")
-check(wczoraj, miesiac,rok)
+check(wczoraj)
 
 print("miejsca z największą liczbą przypadków: ")
-top(wczoraj,miesiac,rok)
+top(wczoraj)
 
 formated_gdf = df.groupby(["Country/Region"]).max()
 formated_gdf =  formated_gdf.reset_index()
-date = f"{miesiac}/{wczoraj}/{rok}"
+date = format_date(wczoraj)
 formated_gdf['size'] = formated_gdf[date].pow(0.3)
 fig = px.scatter_geo(formated_gdf, locations="Country/Region", locationmode='country names', 
                      color=date, size="size", hover_name="Country/Region", 
