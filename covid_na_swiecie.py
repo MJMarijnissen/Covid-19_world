@@ -12,17 +12,27 @@ import plotly.express as px
 from plotly.offline import plot
 import os
 
-
 wczoraj = datetime.date.today() - datetime.timedelta(days=1)
-# wczoraj = datetime.today().day-1
-# miesiac = datetime.today().month
-# rok = datetime.today().year-2000
 
 url = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
+
 df = pd.read_csv(url, error_bad_lines=False)
 
-# Helper function (strftime not cross platform) ???
 def format_date(date: datetime.date):
+    """
+    Helper function, converts date format to used in url. Works with differnt OS
+
+    Parameters
+    ----------
+    date : datetime.date
+        datetime object ex. datetime.date(2020, 3, 22)
+
+    Returns
+    -------
+    TYPE STR
+        Date in the form of string with proper formating
+
+    """
     if os.name == "nt":
         return date.strftime('%#m/%#d/%y')
     else:
