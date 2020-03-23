@@ -50,12 +50,13 @@ def check_poland(date: datetime.date):
 
     Returns
     -------
-    None. Only prints results
+    result : INT
+        number of cases in Poland
 
     """
     date = format_date(date)
     result = df.loc[df["Country/Region"]=="Poland"][date].values[0]
-    print(result)
+    return result
 	
 
 def top(date: datetime.date):
@@ -66,15 +67,16 @@ def top(date: datetime.date):
     ----------
     date : datetime.date
         datetime object ex. datetime.date(2020, 3, 22)
-
+   
     Returns
     -------
-    None. Only prints results
+    result : Pandas.DataFrame
+        columns: index nr, Province/State, Country/Region, date for top 15 countries
 
     """
     date = format_date(date)
-    result = df[["Province/State", "Country/Region", date]].sort_values(by=date).tail(10)
-    print(result)
+    result = df[["Province/State", "Country/Region", date]].sort_values(by=date).tail(15)
+    return result
     
 
 def brak_wirusa(date: datetime.date):
@@ -125,11 +127,10 @@ def draw_circle_world_map(date: datetime.date):
 
 
 if __name__ == '__main__':
-    print(f"data: {wczoraj}")
-    print(f"przypadki w Polsce: ")
-    check_poland(wczoraj)
+    print(f"For date: {wczoraj}")
+    print(f"Cases in Poland: {check_poland(wczoraj)}")
     
-    print("miejsca z największą liczbą przypadków: ")
-    top(wczoraj)
-    print('mapka')
+    print("Top Country/Regions: ")
+    print(top(wczoraj))
+    print('drawing map')
     draw_circle_world_map(wczoraj)
