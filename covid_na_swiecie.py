@@ -124,11 +124,12 @@ def draw_circle_world_map(date: datetime.date):
     plot(fig)
 
 
-print(f"data: {wczoraj}")
-print(f"przypadki w Polsce: ")
-check_poland(wczoraj)
-
-print("miejsca z największą liczbą przypadków: ")
-top(wczoraj)
-print('mapka')
-draw_circle_world_map(wczoraj)
+if __name__ == '__main__':
+    print(f"data: {wczoraj}")
+    print(f"przypadki w Polsce: ")
+    check_poland(wczoraj)
+    
+    print("miejsca z największą liczbą przypadków: ")
+    top(wczoraj)
+    print('mapka')
+    draw_circle_world_map(wczoraj)
