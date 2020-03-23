@@ -10,6 +10,7 @@ from datetime import datetime
 import numpy as np
 import plotly.express as px
 from plotly.offline import plot
+import os
 
 
 wczoraj = datetime.today().day-1
@@ -18,6 +19,13 @@ rok = datetime.today().year-2000
 
 url = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
 df = pd.read_csv(url, error_bad_lines=False)
+
+# Helper function (strftime not cross platform) ???
+def format_date(date: datetime.date):
+    if os.name == "nt":
+        return date.strftime('%#m/%#d/%y')
+    else:
+        return date.strftime('%-m/%-d/%y')
 
 
 def check(dzien, mies, rok):
