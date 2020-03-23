@@ -120,10 +120,36 @@ def draw_circle_world_map(date: datetime.date):
                      color=date, size="size", hover_name="Country/Region", 
                      range_color= [0, max(formated_gdf[date])+2], 
                      projection="natural earth", 
-                     title=f"COVID-19 na swiecie w dniu {date}" 
+                     title=f"COVID-19 confirmed cases for date: {date}" 
                      )
 
     plot(fig)
+    
+def draw_country_world_map(date: datetime.date):
+    """
+    Creates world map of cases around the world, colours countries. Map comes in .html
+
+    Parameters
+    ----------
+    date : datetime.date
+        datetime object ex. datetime.date(2020, 3, 22)
+
+    Returns
+    -------
+    .html file. Open in browser to view
+
+    """
+    date = format_date(date)
+    formated_gdf = df.groupby(["Country/Region"]).max()
+    formated_gdf =  formated_gdf.reset_index()
+    date = format_date(wczoraj)
+    fig2 = px.choropleth(formated_gdf, locations="Country/Region", locationmode='country names', 
+                     color=date, hover_name="Country/Region", 
+                     #range_color= [0, 1], 
+                     projection="natural earth",  
+                     title=f"COVID-19 confirmed cases for date: {date}")
+
+    plot(fig2)
 
 
 if __name__ == '__main__':
@@ -134,3 +160,4 @@ if __name__ == '__main__':
     print(top(wczoraj))
     print('drawing map')
     draw_circle_world_map(wczoraj)
+    draw_country_world_map(wczoraj)
