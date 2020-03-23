@@ -39,25 +39,20 @@ def format_date(date: datetime.date):
         return date.strftime('%-m/%-d/%y')
 
 
-def check(date: datetime.date):
+def check_poland(date: datetime.date):
     """
-    Sprawdza ile wystąpień wirusa jest w Polsce
+    Number of confirmed cases in Poland for given date
 
     Parameters
     ----------
-    dzien : INT
-        Day of the year
-    mies : INT
-        Month of the year
-    rok : INT
-        Last 2 digits of year e.g. for 2020, write 20
+    date : datetime.date
+        datetime object ex. datetime.date(2020, 3, 22)
 
     Returns
     -------
     None. Only prints results
 
     """
-	#df = pd.read_csv(url, error_bad_lines=False)
     date = format_date(date)
     result = df.loc[df["Country/Region"]=="Poland"][date].values[0]
     print(result)
@@ -65,16 +60,12 @@ def check(date: datetime.date):
 
 def top(date: datetime.date):
     """
-    Zwraca miejsca z największą liczbą przypadkóW
+    Places with most confirmed cases
 
     Parameters
     ----------
-    dzien : INT
-        Day of the year
-    mies : INT
-        Month of the year
-    rok : INT
-        Last 2 digits of year e.g. for 2020, write 20
+    date : datetime.date
+        datetime object ex. datetime.date(2020, 3, 22)
 
     Returns
     -------
@@ -88,16 +79,12 @@ def top(date: datetime.date):
 
 def brak_wirusa(date: datetime.date):
     """
-    brak przypadków do dannego dnia włącznie
+    Places with no cases up till this date
 
     Parameters
     ----------
-    dzien : INT
-        Day of the year
-    mies : INT
-        Month of the year
-    rok : INT
-        Last 2 digits of year e.g. for 2020, write 20
+    date : datetime.date
+        datetime object ex. datetime.date(2020, 3, 22)
 
     Returns
     -------
@@ -126,7 +113,7 @@ def draw_circle_world_map(date: datetime.date):
 
 print(f"data: {wczoraj}")
 print(f"przypadki w Polsce: ")
-check(wczoraj)
+check_poland(wczoraj)
 
 print("miejsca z największą liczbą przypadków: ")
 top(wczoraj)
