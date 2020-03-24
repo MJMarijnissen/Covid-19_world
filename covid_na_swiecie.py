@@ -75,7 +75,7 @@ def top(date: datetime.date):
 
     """
     date = format_date(date)
-    result = df[["Province/State", "Country/Region", date]].sort_values(by=date).tail(15)
+    result = df[["Province/State", "Country/Region", date]].sort_values(by=date).dropna().tail(15)
     return result
     
 
