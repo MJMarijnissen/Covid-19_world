@@ -153,6 +153,46 @@ def draw_country_world_map(date: datetime.date):
 
     plot(fig2)
 
+def draw_bar_plot(date: datetime.date):
+    """
+    Generates plotly .html of cases distribution in world for given date
+
+    Parameters
+    ----------
+    date : datetime.date
+        datetime object ex. datetime.date(2020, 3, 22)
+
+    Returns
+    -------
+    .html file. Open in browser to view
+
+    """
+    date = format_date(date)
+    fig = px.bar(df[["Country/Region", wczoraj]], x="Country/Region", y= wczoraj,
+                 title=f"COVID-19 confirmed cases for date: {date}")
+    plot(fig)
+    
+def draw_diff_bar_plot(date: datetime.date):
+    """
+    Generates plotly .html of cases distribution in world for given date
+
+    Parameters
+    ----------
+    date : datetime.date
+        datetime object ex. datetime.date(2020, 3, 22)
+
+    Returns
+    -------
+    .html file. Open in browser to view
+
+    """
+    date_before = date - datetime.timedelta(days=1)
+    date = format_date(date)
+    date_before = format_date(date_before)
+    dDiff = df[date] - df[date_before]
+    fig = px.bar(df[["Country/Region", date]], x="Country/Region", y= dDiff,
+                 title=f"COVID-19 increase for date: {date}")
+    plot(fig)
 
 if __name__ == '__main__':
     print(f"For date: {wczoraj}")
