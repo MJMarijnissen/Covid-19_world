@@ -174,7 +174,7 @@ def draw_bar_plot(date: datetime.date):
     
 def draw_diff_bar_plot(date: datetime.date):
     """
-    Generates plotly .html of cases distribution in world for given date
+    Generates plotly .html of most increase in cases distribution in world for given date
 
     Parameters
     ----------
@@ -201,5 +201,6 @@ if __name__ == '__main__':
     print("Top Country/Regions: ")
     print(top(wczoraj))
     print('drawing map')
-    draw_circle_world_map(wczoraj)
-    draw_country_world_map(wczoraj)
+    #draw_circle_world_map(wczoraj)
+    raw_country_world_map(wczoraj)
+    draw_diff_bar_plot(wczoraj)
