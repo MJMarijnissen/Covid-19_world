@@ -14,7 +14,9 @@ import os
 
 wczoraj = datetime.date.today() - datetime.timedelta(days=1)
 
-url = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
+url = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
+
+#url = f"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
 
 df = pd.read_csv(url, error_bad_lines=False)
 
@@ -75,7 +77,7 @@ def top(date: datetime.date):
 
     """
     date = format_date(date)
-    result = df[["Province/State", "Country/Region", date]].sort_values(by=date).dropna().tail(15)
+    result = df[["Province/State", "Country/Region", date]].sort_values(by=date).tail(15)
     return result
     
 
